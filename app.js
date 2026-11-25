@@ -62,7 +62,7 @@
   };
 
   const state = {
-    theme: "dark",
+    theme: "light",
     stageMode: "interactive",
     sample: "coast",
     lut: "classic-neg",
