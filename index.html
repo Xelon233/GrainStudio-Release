@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grain Studio — macOS 胶片色彩与 RAW 影调工作站</title>
+  <meta name="description" content="光影有度，胶片归真。Grain Studio 是面向 macOS 14+ 与 iPadOS 17+ 的原生胶片色彩与 RAW 影调工作站。" />
+  <link rel="icon" type="image/png" href="./assets/app-icon.png" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳至正文内容</a>
+
+  <header class="localnav" role="banner">
+    <div class="localnav-inner">
+      <a class="localnav-brand" href="#top" aria-label="Grain Studio 首页">
+        <span class="wax-seal" aria-hidden="true"></span>
+        <span class="brand-name">Grain Studio</span>
+      </a>
+
+      <nav class="localnav-menu" aria-label="主导航">
+        <a href="#workspace">概览</a>
+        <a href="#highlights">色彩与引擎</a>
+        <a href="#craft">精修与挑片</a>
+        <a href="#performance">性能实测</a>
+        <a href="#pipeline">渲染流程</a>
+        <a href="#releases">下载与日志</a>
+      </nav>
+
+      <div class="localnav-actions">
+        <button class="apple-chip-btn" id="themeToggle" type="button" aria-label="切换深色与浅色外观">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="8" cy="8" r="3.2" />
+            <path d="M8 1.5v1.3M8 13.2v1.3M1.5 8h1.3M13.2 8h1.3M3.4 3.4l.9.9M11.7 11.7l.9.9M12.6 3.4l-.9.9M4.3 11.7l-.9.9" />
+          </svg>
+          <span id="themeToggleLabel">浅色外观</span>
+        </button>
+
+        <a class="apple-chip-btn" href="https://github.com/Xelon233/GrainStudio-Release" target="_blank" rel="noopener noreferrer">
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+    <div class="nav-progress" id="navProgress" aria-hidden="true"></div>
+  </header>
+
+  <main id="main-content">
+    <!-- Centered Apple Hero -->
+    <section class="apple-hero" id="top">
+      <div class="hero-header-stack">
+        <img class="hero-icon" src="./assets/app-icon.png" alt="Grain Studio 应用图标" width="72" height="72" />
+
+        <h1 class="hero-title">光影有度，胶片归真</h1>
+
+        <p class="hero-subtitle">
+          工具隐入暗处，光影自然浮现<span class="hang-punc">。</span>
+        </p>
+
+        <div class="hero-cta-row">
+          <a
+            class="apple-pill-cta"
+            id="primaryDownloadBtn"
+            href="https://github.com/Xelon233/GrainStudio-Release/releases/latest"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span id="downloadBtnText">下载 Grain Studio 1.1.25</span>
+          </a>
+
+          <a class="apple-link-cta" href="#releases">
+            <span>查看技术规格与校验码</span>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 3.5 10.5 8 6 12.5" />
+            </svg>
+          </a>
+        </div>
+
+        <p class="hero-footnote mono-val" id="releaseAssetMeta">
+          v1.1.25 (Build 36) · macOS 14.0+ · 206.1 MB DMG · <span class="nowrap">iPadOS 17.0+ 协同适配</span>
+        </p>
+      </div>
+
+      <!-- Full-bleed Centered Mac Studio Frame -->
+      <div class="hero-showcase" id="workspace">
+        <div class="mac-frame">
+          <div class="mac-titlebar">
+            <div class="traffic-lights" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+
+            <div class="stage-plate-info" id="stagePlateInfo">
+              <span>splash_coast.jpg</span>
+              <span class="mono-val">4096 × 2304 · 交互暗房校样</span>
+            </div>
+
+            <div class="segmented-control" role="tablist" aria-label="工作台视图模式">
+              <button class="seg-tab is-active" type="button" role="tab" aria-selected="true" data-stage-mode="interactive">
+                <span class="status-dot" aria-hidden="true"></span>交互校样台
+              </button>
+              <button class="seg-tab" type="button" role="tab" aria-selected="false" data-stage-mode="app-dark">
+                深色界面实拍
+              </button>
+              <button class="seg-tab" type="button" role="tab" aria-selected="false" data-stage-mode="app-light">
+                日光界面实拍
+              </button>
+            </div>
+          </div>
+
+          <div class="mac-viewport">
+            <div class="proofing-view is-visible" id="interactiveProofingView">
+              <div class="proofing-canvas-wrap">
+                <img
+                  id="proofingImage"
+                  src="./assets/splash_coast.jpg"
+                  alt="Grain Studio 暗房校样样张"
+                />
+                <div class="film-grain-overlay" id="grainOverlay" aria-hidden="true"></div>
+                <div class="compare-badge" id="compareBadge" hidden>原图 · 导入基准</div>
+
+                <div class="dock-floating" aria-label="样本与对比控制">
+                  <button class="dock-btn is-active" type="button" data-sample="coast">海岸灯塔</button>
+                  <button class="dock-btn" type="button" data-sample="gallery">混凝土光影</button>
+                  <span class="dock-sep" aria-hidden="true"></span>
+                  <button class="dock-btn" id="compareHoldBtn" type="button" title="按住对比原图">对比原图</button>
+                  <button class="dock-btn" id="resetGradingBtn" type="button">归零</button>
+                </div>
+              </div>
+
+              <aside class="inspector-panel" aria-label="实时胶片调色检查器">
+                <div class="inspector-section">
+                  <div class="inspector-head">
+                    <span>影调预设 LUT</span>
+                    <span class="mono-val" id="activeLutLabel">F-Log2 Classic Neg</span>
+                  </div>
+                  <div class="lut-chips" role="group" aria-label="选择胶片预设">
+                    <button class="lut-chip is-active" type="button" data-lut="classic-neg">Classic Neg</button>
+                    <button class="lut-chip" type="button" data-lut="hncs">HNCS 自然</button>
+                    <button class="lut-chip" type="button" data-lut="velvia">Velvia 50</button>
+                    <button class="lut-chip" type="button" data-lut="arri">ARRI 3110</button>
+                  </div>
+                </div>
+
+                <div class="inspector-section">
+                  <div class="inspector-head">
+                    <span>实时校样参数</span>
+                    <span class="mono-val" id="evSummary">+0.00 EV</span>
+                  </div>
+
+                  <div class="slider-row">
+                    <div class="slider-label-line">
+                      <label for="sliderExposure">
+                        <span class="modified-dot" id="dotExposure" hidden></span>曝光补偿
+                      </label>
+                      <output class="mono-val readout" id="valExposure" for="sliderExposure">0.00 EV</output>
+                    </div>
+                    <div class="caliper-slider" data-bipolar="true">
+                      <span class="center-tick" aria-hidden="true"></span>
+                      <span class="active-span" id="spanExposure" aria-hidden="true"></span>
+                      <input id="sliderExposure" type="range" min="-100" max="100" value="0" />
+                    </div>
+                  </div>
+
+                  <div class="slider-row">
+                    <div class="slider-label-line">
+                      <label for="sliderContrast">
+                        <span class="modified-dot" id="dotContrast" hidden></span>ACR 影调反差
+                      </label>
+                      <output class="mono-val readout" id="valContrast" for="sliderContrast">0</output>
+                    </div>
+                    <div class="caliper-slider" data-bipolar="true">
+                      <span class="center-tick" aria-hidden="true"></span>
+                      <span class="active-span" id="spanContrast" aria-hidden="true"></span>
+                      <input id="sliderContrast" type="range" min="-50" max="50" value="0" />
+                    </div>
+                  </div>
+
+                  <div class="slider-row">
+                    <div class="slider-label-line">
+                      <label for="sliderWarmth">
+                        <span class="modified-dot" id="dotWarmth" hidden></span>白平衡色温
+                      </label>
+                      <output class="mono-val readout" id="valWarmth" for="sliderWarmth">5500 K</output>
+                    </div>
+                    <div class="caliper-slider" data-bipolar="true">
+                      <span class="center-tick" aria-hidden="true"></span>
+                      <span class="active-span" id="spanWarmth" aria-hidden="true"></span>
+                      <input id="sliderWarmth" type="range" min="-50" max="50" value="0" />
+                    </div>
+                  </div>
+
+                  <div class="slider-row">
+                    <div class="slider-label-line">
+                      <label for="sliderGrain">
+                        <span class="modified-dot" id="dotGrain" hidden></span>物理胶片颗粒
+                      </label>
+                      <output class="mono-val readout" id="valGrain" for="sliderGrain">24%</output>
+                    </div>
+                    <div class="caliper-slider" data-bipolar="false">
+                      <span class="active-span" id="spanGrain" aria-hidden="true"></span>
+                      <input id="sliderGrain" type="range" min="0" max="100" value="24" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="inspector-section inspector-telemetry">
+                  <div class="telemetry-row">
+                    <span>色彩空间</span>
+                    <span class="mono-val">CST · sRGB / P3</span>
+                  </div>
+                  <div class="telemetry-row">
+                    <span>直方图与影调</span>
+                    <span class="mono-val" id="toneTelemetry">低调高动态 · 16-bit</span>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <div class="screenshot-view" id="appDarkView">
+              <img src="./assets/app-dark.png" alt="Grain Studio macOS 深色暗房模式完整界面截图" loading="lazy" />
+            </div>
+
+            <div class="screenshot-view is-zone-v" id="appLightView">
+              <img src="./assets/app-light.png" alt="Grain Studio macOS Zone-V 中灰日光校样模式界面截图" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Apple Bento Highlights -->
+    <section class="apple-section" id="highlights">
+      <div class="section-intro-centered">
+        <h2>忠于底片本源，快至毫厘之间。</h2>
+        <p>
+          融汇 LibRaw、Rust 与 Metal 算力，只为呈现纯正胶片质感<span class="hang-punc">。</span>
+        </p>
+      </div>
+
+      <div class="bento-grid">
+        <article class="bento-tile bento-wide">
+          <div class="bento-copy">
+            <h3>16 位 ACR 通透影调，冷解码提速 67.4%。</h3>
+            <p>
+              C++ 内存管线直接交付带 Associated Alpha 的 RGBA16 位图，彻底告别临时磁盘 I/O。注入对标 Camera Raw 的 16 位 S 型色调映射，压实暗部黑位、消除浮灰，RAW 冷解码由 13.81 秒缩减至 4.50 秒。
+            </p>
+            <div class="bento-spec-line mono-val">
+              LibRaw 0.21.4 · 零磁盘 I/O · ΔL* +0.1 / ΔC* +0.3
+            </div>
+          </div>
+          <div class="bento-media">
+            <img src="./assets/splash_gallery.jpg" alt="Grain Studio 16 位 ACR S 曲线明暗宽容度样张" loading="lazy" />
+          </div>
+        </article>
+
+        <article class="bento-tile">
+          <div class="bento-copy">
+            <h3>87 款原厂色彩科学与 CST 内核。</h3>
+            <p>
+              正交解耦色域三原色与光电传递函数，内置 Hasselblad HNCS、Fujifilm F-Log2（Classic Neg / Velvia / Eterna / Reala Ace）、ARRI LogC4 与 RED 电影色彩。覆盖 12 大色域与 17 种工业传递函数，Swift 与 Rust 双端往返误差低于 <span class="mono-val nowrap">7.77e-16</span>。
+            </p>
+          </div>
+          <div class="bento-tag-list" aria-label="支持色彩体系">
+            <span>Hasselblad HNCS</span>
+            <span>Fujifilm F-Log2</span>
+            <span>ARRI LogC4</span>
+            <span>REDlogFilm</span>
+            <span>Display P3</span>
+            <span>ACEScg</span>
+          </div>
+        </article>
+
+        <article class="bento-tile">
+          <div class="bento-copy">
+            <h3>Apple 神经引擎，静默驻守本地。</h3>
+            <p>
+              ELD Bayer RAW 域降噪与 NAFNet 高频残差融合各司其职，在压制噪点的同时 100% 保全原生微纹理与毛孔质感。搭配 DepthAnything 景深与 SkySeg 天空分割，实现发丝级主体保护与实时光斑重塑。
+            </p>
+          </div>
+          <div class="bento-tag-list" aria-label="端侧神经网络">
+            <span>ELD Bayer 降噪</span>
+            <span>NAFNet-SIDD</span>
+            <span>AIperture 散景</span>
+            <span>SkySeg 天空分割</span>
+            <span>Vision 76 关键点</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Craft & Portrait / AIperture / Curation -->
+    <section class="apple-section" id="craft">
+      <div class="section-intro-centered">
+        <h2>从挑片到精修，每一处都克制精准。</h2>
+        <p>
+          告别塑料磨皮与繁琐图层，把频域分离、景深遮罩与图库检索藏进丝滑直觉的交互中<span class="hang-punc">。</span>
+        </p>
+      </div>
+
+      <div class="craft-showcase">
+        <article class="craft-feature-row">
+          <div class="craft-feature-head">
+            <h3>人像质感重塑，保留 100% 原生微毛孔</h3>
+            <p class="craft-lead">
+              基于 Vision 76 个面部关键点定位与色相走廊动态皮肤蒙版，坚持「非磨皮保真原则」。
+            </p>
+          </div>
+          <div class="craft-points">
+            <div class="craft-point">
+              <strong>0.75–1.35px 微毛孔层无损回添</strong>
+              <span>对称软限幅抑制中频肌理起伏，严格隔离并加回原生高频毛孔与胶片颗粒，绝不发白、发灰或塑料假面。</span>
+            </div>
+            <div class="craft-point">
+              <strong>就近取色画笔与双层发缝丰盈</strong>
+              <span>痘印与瑕疵采用邻域色彩采样填充；发缝露白基于额头穹顶倾角定位，叠加底层微阴影与表层发流微纹理。</span>
+            </div>
+            <div class="craft-point">
+              <strong>面部光影与质感精修</strong>
+              <span>独立控制肤色统一、透亮去油光、唇色增强、牙齿去黄以及眼内 P97 亮度上尾眼神光提亮。</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="craft-feature-row">
+          <div class="craft-feature-head">
+            <h3>AIperture 景深虚化与真实光路散射</h3>
+            <p class="craft-lead">
+              Vision 主体蒙版双轨融合 DepthAnything 深度场，单滑杆实时重塑光学散景与氛围光影。
+            </p>
+          </div>
+          <div class="craft-points">
+            <div class="craft-point">
+              <strong>发丝级主体硬核保护</strong>
+              <span>背景按纵深由近及远平滑虚化，主体发丝与轮廓 100% 刀锋清晰，无明显主体时支持画笔手动保留或橡皮擦除。</span>
+            </div>
+            <div class="craft-point">
+              <strong>四种经典光圈散斑形态</strong>
+              <span>自适应锁定焦外高光点光源，提供圆形、六边形、星芒与爱心光孔模拟，支持画笔手动散布或剔除光斑。</span>
+            </div>
+            <div class="craft-point">
+              <strong>定向丁达尔光束与体积光</strong>
+              <span>支持点光源到主体的手动光路散射与多光源环境体积光渐变，在裁剪前生成并受几何变换统一驱动。</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="craft-feature-row">
+          <div class="craft-feature-head">
+            <h3>Vision 智能挑片与可回溯历史工作流</h3>
+            <p class="craft-lead">
+              SQLite 高速图库引擎配合横幅胶片条与全键盘直编，百张底片筛选一气呵成。
+            </p>
+          </div>
+          <div class="craft-points">
+            <div class="craft-point">
+              <strong>Vision 美学与清晰度评分</strong>
+              <span>自动评估构图与技术锐度，配合星级（⌥0–5）、留用（⌥P）/排除（⌥X）与 EXIF 全局实时检索。</span>
+            </div>
+            <div class="craft-point">
+              <strong>点击即预览的完整历史轨迹</strong>
+              <span>点击任意历史节点即可无损观感回溯且不丢失后续步骤，支持右键截断回退与 ⌘C / ⌘V 跨图批量复制调色。</span>
+            </div>
+            <div class="craft-point">
+              <strong>全位深导出与双端协同</strong>
+              <span>支持 8/16/32 位 TIFF、PNG、JPEG、HEIC、AVIF 与 DNG 导出并保留完整 EXIF；iPadOS 17+ 同步适配触控工作流。</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Engineering Benchmark Performance -->
+    <section class="apple-section" id="performance">
+      <div class="section-intro-left">
+        <h2>实测性能优势，快到无需等待。</h2>
+        <p>
+          每一项耗时指标均在真实 2400 万至 6000 万像素 RAW 样片下测得，以内存级管线与硬件并发换取 60fps 跟手体验。
+        </p>
+      </div>
+
+      <div class="perf-grid">
+        <article class="perf-card">
+          <div class="perf-stat mono-val">67.4% 提速</div>
+          <h3>RAW 零磁盘 I/O 冷解码</h3>
+          <p class="perf-compare mono-val">13.81s → 4.50s</p>
+          <p class="perf-desc">
+            C++ 层直接输出内存 RGBA16 位图，复用半尺寸反交织缓冲与 400px 并行面积均值下采样，首帧零等待上屏。
+          </p>
+        </article>
+
+        <article class="perf-card">
+          <div class="perf-stat mono-val">5.8s ~ 6.2s</div>
+          <h3>24MP Bayer RAW 神经降噪</h3>
+          <p class="perf-compare mono-val">28.0s → 6.0s（GPU / ANE 并发）</p>
+          <p class="perf-desc">
+            7.76M 参数 ELD 架构直接作用于去马赛克前 4 通道阵列，TileCanvas + 2D Smoothstep 权重彻底消除分块接缝。
+          </p>
+        </article>
+
+        <article class="perf-card">
+          <div class="perf-stat mono-val">3× 提速</div>
+          <h3>Metal 60fps 曲线与滑杆交互</h3>
+          <p class="perf-compare mono-val">LUT 数据传输直降 78.4%</p>
+          <p class="perf-desc">
+            基底阶段 DAG 缓存跳过前段重滤镜；拖动期自动切换 24³ 动态 LOD，停手 250ms 无感补齐 40³ 精度与胶片颗粒。
+          </p>
+        </article>
+
+        <article class="perf-card">
+          <div class="perf-stat mono-val">50%+ 提速</div>
+          <h3>受限并发批量无损导出</h3>
+          <p class="perf-compare mono-val">内存工作集严控 ≤ 1.2 GB</p>
+          <p class="perf-desc">
+            2–3 路智能并发让 RAW 解码与磁盘编码无缝重叠，显式配置 PNG Paeth 滤波令 24MP PNG 编码单图立减 25%–35%。
+          </p>
+        </article>
+      </div>
+
+      <div class="qa-bar" aria-label="工程级自动化自检护栏">
+        <div class="qa-item">
+          <span class="mono-val">1,828+</span>
+          <span>项三栏与顶栏几何回归自检</span>
+        </div>
+        <div class="qa-item">
+          <span class="mono-val">≥ 8 dB</span>
+          <span>AI 降噪平坦区信噪增益硬护栏</span>
+        </div>
+        <div class="qa-item">
+          <span class="mono-val">≤ 7.77e-16</span>
+          <span>Swift / Rust 17 种传递函数往返误差</span>
+        </div>
+        <div class="qa-item">
+          <span class="mono-val">0 云端依赖</span>
+          <span>全本地端侧运算与独立 RAW 进程隔离</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deterministic Pipeline Flowchart -->
+    <section class="apple-section" id="pipeline">
+      <div class="section-intro-left">
+        <h2>无损渲染管线，<span class="nowrap">每一步</span>都严丝合缝。</h2>
+        <p>
+          从 0 到 5 的确定性处理顺序锁定解码与色彩基线。无论何时微调曲线、HSL 或人像局部修饰，历史栈与原始宽容度始终纯净可逆。
+        </p>
+      </div>
+
+      <div class="pipeline-flow" role="region" aria-label="无损渲染管线流程图">
+        <div class="flow-row">
+          <article class="flow-node">
+            <div class="flow-node-head">
+              <span class="flow-num mono-val" aria-hidden="true">0</span>
+              <h3>Bayer RAW 域神经降噪</h3>
+            </div>
+            <p>去马赛克前 4 通道 RGGB 阵列 ELD 推理，结合影调与主体 2D 空间权重图分层降噪。</p>
+          </article>
+
+          <div class="flow-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10h13M12 6l4 4-4 4" />
+            </svg>
+          </div>
+
+          <article class="flow-node">
+            <div class="flow-node-head">
+              <span class="flow-num mono-val" aria-hidden="true">1</span>
+              <h3>内容感知修复</h3>
+            </div>
+            <p>早于降噪与调色的画布语义级修补，保持基底胶片颗粒与纹理连续。</p>
+          </article>
+
+          <div class="flow-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10h13M12 6l4 4-4 4" />
+            </svg>
+          </div>
+
+          <article class="flow-node">
+            <div class="flow-node-head">
+              <span class="flow-num mono-val" aria-hidden="true">2</span>
+              <h3>双轨残差降噪与彩噪抑制</h3>
+            </div>
+            <p>传感器降噪、NAFNet 残差限幅融合与亮度通道锁定的色度平滑。</p>
+          </article>
+        </div>
+
+        <div class="flow-bridge" aria-hidden="true">
+          <span class="bridge-exit"></span>
+          <span class="bridge-span"></span>
+          <span class="bridge-enter"></span>
+          <svg class="bridge-arrowhead" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 5l4 4 4-4" />
+          </svg>
+        </div>
+
+        <div class="flow-row">
+          <article class="flow-node">
+            <div class="flow-node-head">
+              <span class="flow-num mono-val" aria-hidden="true">3</span>
+              <h3>人像质感重塑与画笔</h3>
+            </div>
+            <p>76 关键点面部走廊定位、近邻采样去瑕疵，并无损加回 0.75–1.35px 原生微毛孔层。</p>
+          </article>
+
+          <div class="flow-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10h13M12 6l4 4-4 4" />
+            </svg>
+          </div>
+
+          <article class="flow-node">
+            <div class="flow-node-head">
+              <span class="flow-num mono-val" aria-hidden="true">4</span>
+              <h3>机身配置、RAW 增益与 LUT</h3>
+            </div>
+            <p>单调性校验机身 Cube、RawTint 后置通道增益，以及 3D 四面体电影感影调 LUT。</p>
+          </article>
+
+          <div class="flow-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10h13M12 6l4 4-4 4" />
+            </svg>
+          </div>
+
+          <article class="flow-node">
+            <div class="flow-node-head">
+              <span class="flow-num mono-val" aria-hidden="true">5</span>
+              <h3>交互调色、蒙版与银盐颗粒</h3>
+            </div>
+            <p>基底 DAG 缓存加速 60fps 曝光、12 点曲线、HSL、天空蒙版、体积光与物理密度颗粒。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Release & Distribution -->
+    <section class="apple-section" id="releases">
+      <div class="section-intro-left">
+        <h2>即刻获取 macOS 发行版。</h2>
+        <p>
+          通过 GitHub Releases 分发原生 DMG 磁盘映像，内置用户许可协议面板，无订阅、无水印、无在线验证。
+        </p>
+      </div>
+
+      <div class="release-grid">
+        <div class="apple-card release-card">
+          <div class="release-head">
+            <div>
+              <h3 id="latestVersionTitle">v1.1.25 (Build 36)</h3>
+              <span class="sync-pill" id="releaseSyncBadge">本地清单</span>
+            </div>
+            <a
+              class="apple-link-cta"
+              id="releasePageLink"
+              href="https://github.com/Xelon233/GrainStudio-Release/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>全部 Releases</span>
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 3.5 10.5 8 6 12.5" />
+              </svg>
+            </a>
+          </div>
+
+          <dl class="release-dl">
+            <div class="dl-row">
+              <dt>磁盘映像</dt>
+              <dd class="mono-val" id="dmgFilename">Grain Studio 1.1.25.dmg</dd>
+            </div>
+            <div class="dl-row">
+              <dt>文件体积</dt>
+              <dd class="mono-val" id="dmgFilesize">206.1 MB (206,145,821 bytes)</dd>
+            </div>
+            <div class="dl-row">
+              <dt>系统要求</dt>
+              <dd class="mono-val">macOS 14.0 Sonoma 或更高版本 · Apple Silicon / Intel</dd>
+            </div>
+            <div class="dl-row dl-row-full">
+              <dt>SHA-256 校验摘要</dt>
+              <dd>
+                <div class="checksum-box">
+                  <code id="dmgSha256">db8d1b7a30b9b80a1507c59df4eec234cd4826a74981817beb89f49016107e74</code>
+                  <button class="copy-btn" id="copyShaBtn" type="button">复制命令</button>
+                </div>
+              </dd>
+            </div>
+          </dl>
+
+          <p class="gatekeeper-hint">
+            双击 DMG 后将弹出系统内置许可协议，点击「同意」并拖入「应用程序」即可使用；首次运行如遇系统安全拦截，可在「系统设置 → 隐私与安全性」中选择「仍要打开」。
+          </p>
+        </div>
+
+        <div class="apple-card changelog-card">
+          <div class="release-head">
+            <h3>近期版本演进</h3>
+            <a class="apple-link-cta" href="https://github.com/Xelon233/GrainStudio-Release/blob/main/README.md" target="_blank" rel="noopener noreferrer">
+              <span>发行说明</span>
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 3.5 10.5 8 6 12.5" />
+              </svg>
+            </a>
+          </div>
+
+          <ul class="apple-changelog" id="changelogList">
+            <li>
+              <div class="cl-head">
+                <strong class="mono-val">v1.1.25 (Build 36)</strong>
+                <span class="mono-meta">2026-11-25</span>
+              </div>
+              <p>公开发行版构建，包含完整 macOS 推理与 1828+ 项 UI 几何自检，内嵌免费版许可协议面板。</p>
+            </li>
+            <li>
+              <div class="cl-head">
+                <strong class="mono-val">v1.1.17 (Build 28)</strong>
+                <span class="mono-meta">2026-11-25</span>
+              </div>
+              <p>CoreML 边界检查与 5 秒信号量超时防护；补齐分离色调「平衡」、底片「轻微磨损」与 AIperture「点选主体」。</p>
+            </li>
+            <li>
+              <div class="cl-head">
+                <strong class="mono-val">v1.1.16 (Build 27)</strong>
+                <span class="mono-meta">2026-11-24</span>
+              </div>
+              <p>16 位域 ACR 通透 S 曲线影调重塑，零磁盘 I/O 内存解码让 RAW 冷解码提速 67.4%。</p>
+            </li>
+            <li>
+              <div class="cl-head">
+                <strong class="mono-val">v1.1.10 (Build 21)</strong>
+                <span class="mono-meta">2026-11-24</span>
+              </div>
+              <p>悬浮工作坞导入卡片非线性飞出动画与 GPU 硬件合成，支持目录文件即时搜索过滤。</p>
+            </li>
+            <li>
+              <div class="cl-head">
+                <strong class="mono-val">v1.0.00 – v1.0.04</strong>
+                <span class="mono-meta">2026-11-23</span>
+              </div>
+              <p>正式启用 Grain Studio 品牌，确立四向居中画布工作台，并开启 iPadOS 17+ 协同适配。</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="apple-footer">
+    <div class="apple-footer-inner">
+      <div class="footer-legal">
+        <p>
+          依据《Grain Studio 用户协议（免费版 v1.0）》，本软件以 DMG 形式免费分发，允许个人、工作室与商业摄影项目使用。你导出的所有成品图像版权完全归属于你，无功能锁、无使用期限、无强制水印，且不向任何服务器上传你的底片或编辑数据。
+        </p>
+        <p>
+          <a href="https://github.com/Xelon233/GrainStudio-Release/blob/main/%E7%94%A8%E6%88%B7%E5%8D%8F%E8%AE%AE-%E5%85%8D%E8%B4%B9%E7%89%88.txt" target="_blank" rel="noopener noreferrer">阅读完整用户协议</a>
+        </p>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-brand">
+          <span class="wax-seal" aria-hidden="true"></span>
+          <span>Grain Studio</span>
+          <span class="sep">·</span>
+          <span class="mono-val">com.grain.editor</span>
+        </div>
+        <div class="footer-links">
+          <span>iPadOS 版由 @DavidPisces 协同适配</span>
+          <a href="https://github.com/Xelon233/GrainStudio-Release" target="_blank" rel="noopener noreferrer">GitHub 发布仓库</a>
+          <a href="https://github.com/Xelon233/GrainStudio-Release/releases" target="_blank" rel="noopener noreferrer">Releases</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="./app.js"></script>
+</body>
+</html>
