@@ -3,11 +3,11 @@
 
   const REPO = "Xelon233/GrainStudio-Release";
   const LOCAL_FALLBACK = {
-    version: "1.1.25",
-    build: "36",
-    assetName: "Grain Studio 1.1.25.dmg",
-    assetSizeBytes: 206145821,
-    sha256: "db8d1b7a30b9b80a1507c59df4eec234cd4826a74981817beb89f49016107e74",
+    version: "1.1.28",
+    build: "39",
+    assetName: "Grain Studio 1.1.28.dmg",
+    assetSizeBytes: 206190194,
+    sha256: "1e18140593b3192f74795ec9c7e8354937f5ff5b50319b985cb2bbdfc90253aa",
     releaseUrl: `https://github.com/${REPO}/releases`,
   };
 

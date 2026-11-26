@@ -5,8 +5,8 @@
 **Grain Studio** 是一款面向 macOS（14.0+）与 iPadOS（17.0+）的原生胶片色彩与 RAW 影调工作站，本仓库为其**官方发布页与公开发行包仓库**（仅提供编译打包后的应用安装包与官网，不包含源码）。
 
 - **官方网站**：<https://xelon233.github.io/GrainStudio-Release/>
-- **最新版本**：**v1.1.25 (Build 36)**
-- **安装包下载**：前往 [Releases 页面](https://github.com/Xelon233/GrainStudio-Release/releases/latest) 获取 `Grain Studio 1.1.25.dmg`
+- **最新版本**：**v1.1.28 (Build 39)**
+- **安装包下载**：前往 [Releases 页面](https://github.com/Xelon233/GrainStudio-Release/releases/latest) 获取 `Grain Studio 1.1.28.dmg`
 - **系统要求**：macOS 14.0 Sonoma 或更高版本（Apple Silicon / Intel），iPadOS 17.0+ 协同适配（由 [@DavidPisces](https://github.com/DavidPisces) 协同适配）
 
 ---
@@ -23,13 +23,13 @@
 
 ## 安装与首次打开说明
 
-1. 从 [Releases](https://github.com/Xelon233/GrainStudio-Release/releases/latest) 下载 `Grain Studio 1.1.25.dmg`。
+1. 从 [Releases](https://github.com/Xelon233/GrainStudio-Release/releases/latest) 下载 `Grain Studio 1.1.28.dmg`。
 2. （可选）校验 SHA-256 指纹：
    ```zsh
-   shasum -a 256 "Grain Studio 1.1.25.dmg"
+   shasum -a 256 "Grain Studio 1.1.28.dmg"
    ```
    预期摘要见 [SHA256SUMS.txt](./SHA256SUMS.txt)：
-   `db8d1b7a30b9b80a1507c59df4eec234cd4826a74981817beb89f49016107e74`
+   `1e18140593b3192f74795ec9c7e8354937f5ff5b50319b985cb2bbdfc90253aa`
 3. 双击 DMG：系统会先弹出《Grain Studio 用户协议（免费版）》，点击「同意」后即可将 `Grain Studio.app` 拖入「应用程序」。
 4. 首次打开若遇到 macOS Gatekeeper 提示未验证开发者，请前往「系统设置 → 隐私与安全性」点击「仍要打开」（或右键应用图标 →「打开」）。
 
