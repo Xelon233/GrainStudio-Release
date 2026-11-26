@@ -209,18 +209,6 @@ html[data-theme="light"] .localnav {
   color: var(--ink-primary);
 }
 
-.nav-progress {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 1.5px;
-  background: var(--vermilion);
-  transform-origin: left center;
-  transform: scaleX(0);
-  pointer-events: none;
-}
-
 .localnav-actions {
   display: flex;
   align-items: center;
@@ -1339,6 +1327,11 @@ main {
   gap: 8px;
   color: var(--ink-primary);
   font-weight: 600;
+}
+
+.footer-copyright {
+  font-weight: 400;
+  color: var(--ink-tertiary);
 }
 
 .sep {

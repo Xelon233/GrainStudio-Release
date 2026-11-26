@@ -268,7 +268,6 @@
       if (!dmg) return;
 
       const versionTag = data.tag_name || `v${LOCAL_FALLBACK.version}`;
-      el.downloadBtnText.textContent = `下载 ${dmg.name}`;
       el.primaryDownloadBtn.href = dmg.browser_download_url;
       el.releaseAssetMeta.textContent = `${dmg.name} · ${(dmg.size / 1_000_000).toFixed(1)} MB`;
       el.latestVersionTitle.textContent = versionTag;
@@ -357,7 +356,6 @@
 
     document.documentElement.classList.add("has-motion");
 
-    const navProgress = document.getElementById("navProgress");
     const heroHeader = document.querySelector(".hero-header-stack");
     const macFrame = document.querySelector(".mac-frame");
     const navLinks = Array.from(document.querySelectorAll(".localnav-menu a[href^='#']"));
@@ -463,16 +461,11 @@
       }
     });
 
-    // Scroll-driven hero depth parallax + reading progress
+    // Scroll-driven hero depth parallax + active nav tracking
     let ticking = false;
     function updateScrollEffects() {
       ticking = false;
       const y = window.scrollY || 0;
-      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-
-      if (navProgress) {
-        navProgress.style.transform = `scaleX(${Math.min(1, Math.max(0, y / maxScroll)).toFixed(4)})`;
-      }
 
       if (heroHeader && macFrame && window.innerWidth > 720) {
         const p = Math.min(1, y / 420);
